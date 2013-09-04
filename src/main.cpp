@@ -442,11 +442,6 @@ int main( int numArgs, char ** args )
 					{
 						pc += 2;
 					}
-					else
-					{
-						static int a = 5;
-						++a;
-					}
 				}
 				break;
 			case 0x4000:
@@ -458,11 +453,6 @@ int main( int numArgs, char ** args )
 					if ( g_Cpu.Regs.v[ reg ] != val )
 					{
 						pc += 2;
-					}
-					else
-					{
-						static int a = 5;
-						++a;
 					}
 				}
 				break;
@@ -632,11 +622,6 @@ int main( int numArgs, char ** args )
 						if ( ! g_Keys[ g_Cpu.Regs.v[ reg ] ] )
 						{
 							pc += 2;
-						}
-						else
-						{
-							static int a = 5;
-							++a;
 						}
 
 						break;
