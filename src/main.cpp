@@ -397,17 +397,28 @@ int main( int numArgs, char ** args )
 	// Previous instruction (for debugging).
 	address lastInstruction = 0x0000;
 
-	// Last time we processed an instruction.
-	Uint32 lastInstructionTime = 0;
-
 	// Last time we did our 60Hz update.
 	Uint32 last60HzTime = SDL_GetTicks( );
+
+	// Instructions processed since last 60hz interval.
+	Uint8 instructionsProcessedSinceLastUpdate = 0;
 
 	// Loop forever.
 	for ( ; ; )
 	{
 		// Get time (in milliseconds).
 		Uint32 timeNow = SDL_GetTicks( );
+
+		if ( instructionsProcessedSinceLastUpdate >= 15 )
+		{
+			while ( timeNow - last60HzTime <= 1000.f / 60.f )
+			{
+				SDL_Delay( 0 );
+				timeNow = SDL_GetTicks( );
+			}
+
+			instructionsProcessedSinceLastUpdate = 0;
+		}
 
 		// If it has been 60Hz since our last update...
 		if ( timeNow - last60HzTime > 1000.f / 60.f )
@@ -429,14 +440,6 @@ int main( int numArgs, char ** args )
 
 		// Play bleeping sound.
 		api.SetSound( chip8.Cpu.Regs.sound > 0 );
-
-		// Process instructions at a set interval, not really sure what this interval should be.
-		while ( timeNow - lastInstructionTime < 1.f / 256.f )
-		{
-			SDL_Delay( 0 );
-			timeNow = SDL_GetTicks( );
-		}
-		lastInstructionTime = timeNow;
 
 		Uint16 instruction = ( ( ( address )chip8.Memory[ chip8.Cpu.Regs.pc ] ) << 8 ) | ( address )chip8.Memory[ chip8.Cpu.Regs.pc + 1 ];
 
@@ -766,6 +769,9 @@ int main( int numArgs, char ** args )
 
 		// Jump forward to next instruction.
 		chip8.Cpu.Regs.pc += 2;
+
+		// Increment instruction counter.
+		instructionsProcessedSinceLastUpdate++;
 	}
 
 	api.Destroy( );
