@@ -485,6 +485,7 @@ int main( int numArgs, char ** args )
 
 					// Store current PC on stack.
 					chip8.Cpu.Stack[ chip8.Cpu.StackLevel++ ] = chip8.Cpu.Regs.pc;
+					assert( chip8.Cpu.StackLevel < 16 );
 
 					// Set PC, we do -2 as PC is incremented by two after each instruction.
 					chip8.Cpu.Regs.pc = addr - 2;
