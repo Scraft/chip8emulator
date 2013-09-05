@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Winmm.lib SDL.lib SDLmain.lib"
+				AdditionalDependencies="SDL.lib SDLmain.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib\SDL-1.2.15\lib\x86"
 				GenerateDebugInformation="true"
@@ -136,7 +136,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Winmm.lib SDL.lib SDLmain.lib"
+				AdditionalDependencies="SDL.lib SDLmain.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib\SDL-1.2.15\lib\x86"
 				GenerateDebugInformation="true"
